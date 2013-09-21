@@ -23,6 +23,7 @@
 	<link rel="stylesheet" href="../extensions/scale/deck.scale.css">
 	
 	<!-- Style theme. More available in /themes/style/ or create your own. -->
+	<!-- link rel="stylesheet" href="../themes/style/web-2.0.css" -->
 	<link rel="stylesheet" href="../themes/style/swiss.css">
 	
 	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
@@ -80,6 +81,194 @@
       </ul>
     </li>
   </ol>
+</section>
+
+<section class="slide" id="SDN">
+  <h2>SDNとは</h2>
+
+  <div align=center><pre>ネットワークをソフトウェアで制御・管理する</pre></div>
+  <div align=right>コンセプト　　</div>
+</section>
+
+<section class="slide" id="SDN">
+  <h2>NaaSとは</h2>
+
+  <div align=center><pre>物理ネットワーク上に仮想ネットワークを構築する</pre></div>
+  <div align=right>技術　　</div>
+
+  <img height="512" src="./NaaS.png">
+  <!-- VLAN -->
+</section>
+
+<section class="slide" id="SDN">
+  <h2>OpenFlowとは</h2>
+
+  <div align=center><pre>ネットワーク装置とコントローラー間のインターフェース仕様</pre></div>
+  <div align=right>プロトコル　　</div>
+
+  <img height="512" src="./OpenFlowSpecification.png">
+</section>
+
+<section class="slide" id="なぜSDN">
+  <h2>なぜSDN</h2>
+
+  <p>ネットワークへの要望</p>
+  <ul>
+    <li class="slide" id="whysdn-1">
+      <strong>集中管理</strong>
+      <p>ネットワーク上に散らばるネットワーク機器を一か所で集中管理したい。</p>
+    </li>
+    <li class="slide" id="whysdn-2">
+      <strong>障害対応</strong>
+      <p>回線断時の迂回経路設定等、ネットワーク障害への対応を自動化したい。</p>
+    </li>
+    <li class="slide" id="whysdn-3">
+      <strong>ベンダーロックイン</strong>
+      <p>ネットワーク構築においてベンダーロックインされたくない。</p>
+    </li>
+    <li class="slide" id="whysdn-4">
+      <strong>仮想化</strong>
+      <p>サーバー仮想化に動的に対応したい。</p>
+    </li>
+  </ul>
+</section>
+
+<section class="slide" id="なぜOpenFlow">
+  <h2>なぜOpenFlow</h2>
+
+  <p>OpenFlowは、コントローラーがネットワーク全体を俯瞰して経路を決定し、スイッチに経路を通知する集中管理型</p>
+
+  <img height="512" src="./centralized.png">
+</section>
+
+<section class="slide" id="OpenFlow Standard">
+  <h2>OpenFlow 標準化</h2>
+
+  <p>ONF(Open Network Foundation)で標準化</p>
+  <ul>
+    <!-- li>
+      <p>2007年<br>
+      OpenFlowスイッチコンソーシアム設立</p>
+    </li -->
+    <li>
+      <p>2010年 1月<br>
+      OpenFlow Switch Specification 1.0</p>
+    </li>
+    <li>
+      <p>2011年 2月<br>
+      OpenFlow Switch Specification 1.1</p>
+    </li>
+    <!-- li>
+      <p>2011年 3月<br>
+      ONF(Open Networking Foundation)発足</p>
+    </li -->
+    <li>
+      <p>2011年12月<br>
+      OpenFlow Switch Specification 1.2</p>
+    </li>
+    <li>
+      <p>2012年 4月<br>
+      OpenFlow Switch Specification 1.3</p>
+    </li>
+    <li>
+      <p>2013年 8月<br>
+      OpenFlow Switch Specification 1.4</p>
+    </li>
+</section>
+
+<section class="slide" id="OpenFlow ">
+  <h2>OpenFlow 変更点</h2>
+
+  <ul>
+    <li>
+      <p><strong>OpenFlow 1.0<br>
+         キャンパスネットワークやDC内のネットワークがターゲット</p>
+      <!-- p>キャンパスネットワークやDC内のネットワークを意識したプロトコル(Ethernet,VLAN,IPv4,TCP,UDP等)をサポート</p -->
+    </li>
+    <li>
+      <p>OpenFlow 1.1<br>
+         DC間やキャリア網をターゲットに追加</p>
+      <!-- p>DC間やキャリア網を意識した通信プロトコルMPLSやVLANのQinQへ対応。<br>
+         パケットパイプライン処理を実現するための複数フローテーブルの導入</p -->
+    </li>
+    <li>
+      <p>OpenFlow 1.2<br>
+         IPv6をサポート。</p>
+      <!-- p>IPv6へ対応。<br>
+         拡張マッチング記述方式TLV(Type Length Value)を導入。<br>
+         コントローラの冗長化に対応。</p -->
+    </li>
+    <li>
+      <p>OpenFlow 1.3<br>
+         サポートプロトコルの拡大<br>
+         QoS対応</p>
+      <!-- ul>
+        <li>OpenFlow ControllerでのIPv6サポート</li>
+        <li>DCやVPN等で使いやすいようにトンネリングと論理ポートを抽象化</li>
+        <li>DC間で使用されているPBB(Provider Backbone Bridging)に対応</li>
+        <li>ネットワークの帯域の制御のためにフロー単位のQoSに対応</li>
+        <li>OpenFlow Switch でフロー毎の計測やコネクション毎のイベントフィルタをサポート</li>
+      </ul -->
+    </li>
+    <li>
+      <p>OpenFlow 1.4<br>
+         m(..)m</p>
+    </li>
+  </ul>
+</section>
+
+<section class="slide" id="OpenFlow #1">
+  <h2>パケット受信</h2>
+  <img height="640"src="./OpenFlow-1.png">
+</section>
+
+<section class="slide" id="OpenFlow #2">
+  <h2>FDB参照</h2>
+  <img height="640"src="./OpenFlow-2.png">
+</section>
+
+<section class="slide" id="OpenFlow #3">
+  <h2>OFCに問い合わせ</h2>
+  <img height="640"src="./OpenFlow-3.png">
+</section>
+
+<section class="slide" id="OpenFlow #4">
+  <h2>処理方法計算</h2>
+  <img height="640"src="./OpenFlow-4.png">
+</section>
+
+<section class="slide" id="OpenFlow #5">
+  <h2>フロー登録</h2>
+  <img height="640"src="./OpenFlow-5.png">
+</section>
+
+<section class="slide" id="OpenFlow #6">
+  <h2>パケット転送</h2>
+  <img height="640"src="./OpenFlow-6.png">
+</section>
+
+<section class="slide" id="Google">
+  <h2>Google</h2>
+
+  <blockquote cite="http://www.itworldcanada.com/article/how-googles-openflow-backbone-works/46284">
+  <p>..., and we’re able to run our wide-area lines at close to 100 per cent utilization, ...</p>
+  <p><cite>John Dix @itworldca</cent></p>
+  </blockquote>
+  <div align=right>DC間に適用し、回線を有効活用</div>
+<!--
+http://www.opennetsummit.org/archives/apr12/hoelzle-tue-openflow.pdf
+-->
+</section>
+
+<section class="slide" id="Google">
+  <h2>Biglobe</h2>
+
+  <blockquote cite="http://www.biglobe.co.jp/pressroom/release/2013/04/130422-a">
+  <p>...従来2週間かかっていたインフラ構築を約10分へと大幅に短縮。<p>
+  <p><cite>NECビッグローブ株式会社</cent></p>
+  </blockquote>
+  <div align=right>IaaS基盤に適用し、インフラ構築時間を短縮</div>
+  
 </section>
 
 <!-- deck.navigation snippet -->
