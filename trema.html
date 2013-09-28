@@ -138,7 +138,7 @@
 
   <p>OpenFlowは、コントローラーがネットワーク全体を俯瞰して経路を決定し、スイッチに経路を通知する集中管理型</p>
 
-  <img height="512" src="./centralized.png">
+  <img height="512" src="./Centralized.png">
 </section>
 
 <section class="slide" id="OpenFlow Standard">
@@ -269,6 +269,250 @@ http://www.opennetsummit.org/archives/apr12/hoelzle-tue-openflow.pdf
   </blockquote>
   <div align=right>IaaS基盤に適用し、インフラ構築時間を短縮</div>
   
+</section>
+
+<section class="slide" id="Trema">
+  <h2>Tremaとは</h2>
+ 
+  <div align=center><pre>OpenFlowコントローラーを作成するためのフレームワーク</pre></div>
+  <ul>
+    <li>開発言語はRuby and C</li>
+    <li>GPLv2ライセンス</li>
+    <li><a href="https://github.com/trema">https://github.com/trema</a></li>
+  </ul>
+  <center>
+  <table>
+  <tr>
+  <td><img width=400 src="http://image.gihyo.co.jp/assets/images/dev/serial/01/openflow_sd/0010/thumb/TH400_002.jpg" alt="秘密結社トレマのマーク"></td>
+  <td>　　　　</td>
+  <td><img width=400 src="http://image.gihyo.co.jp/assets/images/dev/serial/01/openflow_sd/0010/thumb/TH400_p01.jpg" alt="Tremaプロジェクトメンバー"></td>
+  </tr>
+  </table>
+  </center>
+</section>
+
+<section class="slide" id="OpenFlowFramework">
+  <h2>OpenFlowフレームワーク</h2>
+ 
+  <center>
+  <table>
+    <tr bgcolor="#eeeeee"> 
+      <th>　フレームワーク　</th>
+      <th>　ver　</th>
+      <th>　　言語　　</th>
+      <th>　　　　　開発元　　　　　</th>
+      <th>　ライセンス　</th>
+    </tr>
+    <tr><td>　</td></tr>
+    <tr>
+      <td>Trema</td>
+      <td align="center">1.0</td>
+      <td align="center">Ruby</td>
+      <td>Tremaプロジェクト</td>
+      <td align="center">GPLv2</td>
+    </tr>
+    <tr><td>　</td></tr>
+    <tr>
+      <td>POX</td>
+      <td align="center">1.0</td>
+      <td align="center">Python</td>
+      <td>UCバークレイ</td>
+      <td align="center">GPLv3</td>
+    </tr>
+    <tr><td>　</td></tr>
+    <tr>
+      <td>Nox</td>
+      <td align="center">1.0</td>
+      <td align="center">C++</td>
+      <td>Nicira<br>スタンフォード大学<br>UCバークレイ</td>
+      <td align="center">GPLv3</td>
+    </tr>
+    <tr><td>　</td></tr>
+    <tr>
+      <td>Floodlight</td>
+      <td align="center">1.0</td>
+      <td align="center">JAVA</td>
+      <td>Big Switch Network</td>
+      <td align="center">Apache</td>
+    </tr>
+    <tr><td>　</td></tr>
+    <tr>
+      <td>TremaEdge</td>
+      <td align="center">1.3</td>
+      <td align="center">Ruby</td>
+      <td>Tremaプロジェクト</td>
+      <td align="center">GPLv2</td>
+    </tr>
+   </table>
+   </center>
+
+  <!-- ul>
+    <li>1.0</li>
+      <ul>
+        <li>Trema - Ruby</li>
+        <li>POX - Phthon - UCバークレイ- GPLv3</li>
+        <li>Nox - C++</li>Nicira, スタンフォード大学, UCバークレイ - GPLv3</li>
+        <li>Floodlight - Java - Big Switch Network - Apache</li>
+        <li>OpenDaylight - Java - OpenDaylight - EPL</li>
+      </ul>
+    <li>1.3</li>
+      <ul>
+        <li>TremaEdge - Ruby</li>
+      </ul>
+  </ul -->
+</section>
+
+<section class="slide" id="Trema">
+  <h2>Tremaの特徴</h2>
+
+  <p>Tremaは、はやくて、やすくて、うまい。</p>
+  <ul class="slide">
+    <li>
+      <p>はやい</p>
+      <p>コントローラーを簡単に<!-- font color=red -->短く<!-- /font -->実装できる</p>
+    </li>
+    <li>
+      <p>やすい</p>
+      <p>ネットワークエミュレータ機能により高価なスイッチなしに検証できる</p>
+    </li>
+    <li>
+      <p>うまい</p>
+      <p>サンプルアプリが豊富</p>
+    </li>
+  </ul>
+
+</section>
+
+<section class="slide" id="Trema">
+  <h2>はやい</h2>
+
+  <p>短いコードでコントローラーを素早く開発</p>
+  <div align=right>リピーターハブ　　</div>
+<small>
+<pre><code>class RepeaterHub < Controller
+  def packet_in datapath_id, message
+    send_flow_mod_add(
+      datapath_id,
+      :match => ExactMatch.from( message ),
+      :actions => ActionOutput.new( OFPP_FLOOD )
+    )
+    send_packet_out(
+      datapath_id,
+      :packet_in => message,
+      :actions => ActionOutput.new( OFPP_FLOOD )
+    )
+  end
+end</code></pre>
+</small>
+</section>
+
+<section class="slide" id="Trema">
+  <h2>やすい</h2>
+
+  <p>ネットワークエミュレート機能で高価なスイッチなしで検証</p>
+
+  <center>
+  <table>
+  <tr>
+    <td>
+<small><pre>
+
+vhost("host1")
+vhost("host2")
+
+vswitch("sw1") {
+  datapath_id "0x1"
+}
+vswitch("sw2") {
+  datapath_id "0x2"
+}
+
+link "host1", "sw1"
+link "host2", "sw2"
+link "sw1", "sw2"
+
+</pre></small>
+    </td>
+    <td>　　　</td>
+    <td>
+      <img height=512 src="./DSL.png">
+    </td>
+  </tr>
+  </table>
+  </center>
+
+</section>
+
+<section class="slide" id="Trema">
+  <h2>うまい</h2>
+
+  <ul>
+    <li>Trema同梱サンプルアプリ
+      <ul>
+        <li>Repeter Hub</li>
+        <li>Learning Switch</li>
+        <li>Traffic Monitor</li>
+        <li>他 15 サンプルアプリ</li>
+      </ul>
+    </li>
+    <li>Trema application repository
+      <ul>
+        <li>Sliceable Switch</li>
+        <li>Loadbalance Switch</li>
+        <li>他 20 アプリケーション</li>
+      </ul>
+    </li>
+  </ul>
+
+</section>
+
+<section class="slide" id="Trema API">
+  <h2>Trema API</h2>
+
+  <p>Trema Ruby API : <a href="http://rubydoc.info/github/trema/trema/master/frames">http://rubydoc.info/github/trema/trema/master/frames</a></p>
+  
+  <img height=640 src="./TremaAPI.png">
+</section>
+
+<section class="slide" id="Lifecycle">
+  <h2>開発サイクル</h2>
+
+  <ol>
+    <li>設計</li>
+      実装機能の設計
+    <li>開発(TDD/BDD)</li>
+      <ul>
+        <li>コントローラー実装</li>
+        <li>Trema環境で評価</li>
+      </ul>
+    <li>評価</li>
+      実環境で評価
+  </ol>
+  <img src="./Lifecycle.png">
+
+</section>
+
+<section class="slide" id="OpenStack">
+  <h2>OpenStack</h2>
+
+  <ul>
+    <li>Southbound API<br>
+      <small>物理及び仮想スイッチと SDN コントローラプラットフォームが制御情報を交換するAPI</small>
+    </li>
+    <li>Northbound API<br>
+      <small>FWやLBのような従来のネットワークサービスや、クラウドリソースのオーケストレーションシステム等のアプリケーションにネットワークの制御情報を提供するAPI</small>
+    </li>
+  </ul>
+
+  <img src="./OpenStack.png">
+</section>
+
+<section class="slide" id="Wakame">
+  <h2>Wakame-VDC</h2>
+
+  <p>IaaS型のクラウド環境を実現するための基盤ソフト</p>
+  <div align=right><p>http://wakame.jp/wiki/</p></div>
+  <img height="512" src="./Wakame-VDC.png">
 </section>
 
 <!-- deck.navigation snippet -->
