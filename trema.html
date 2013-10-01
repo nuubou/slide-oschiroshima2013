@@ -515,6 +515,78 @@ link "sw1", "sw2"
   <img height="512" src="./Wakame-VDC.png">
 </section>
 
+<!-- Virtula Netowrk Platform -->
+
+<section class="slide" id="VNP">
+  <h2>Virtual Network Platform</h2>
+
+  <div align=center><pre>オーバーレイ方式で仮想ネットワークを構築する基盤ソフトウェア。</pre></div>
+  <ul>
+    <li>Tremaベース</li>
+    <li>開発言語はRuby and C</li>
+    <li>GPLv2ライセンス</li>
+    <li><a href="https://github.com/trema/virtual-network-platform">https://github.com/trema/virtual-network-platform</a></li>
+  </ul>
+
+</section>
+
+<section class="slide" id="vNW">
+  <h2>ネットワーク構成</h2>
+
+  <ul>
+    <li>エッジのOpen vSwitchにスライスごとに仮想スイッチを構築</li>
+    <li>仮想スイッチをVXLANで接続</li>
+  </ul>
+
+  <img src="./VNP.png">
+</section>
+
+<section class="slide" id="module">
+  <h2>アーキテクチャ</h2>
+
+  <table>
+    <tr>
+      <td><img src="./Module.png"></td>
+      <td>
+        <ul>
+          <li>コントローラー</li>
+            <ul>
+              <li>ConfigurationFrontend<br><small>仮想NWへの制御要求や構成情報をRESTで受け付ける</small></li>
+              <li>Backend DB<br><small>仮想NWへの要求や情報を保持する</small></li>
+              <li>VirtualNetworkManager<br><small>REST,OpenFlowでエージェントの制御を行う</small></li>
+            </ul>
+          <li>エージェント<br><small>VirtualNetworkManagerからの指示に従い、Open vSwitchとVXLAN Tunnel Endpointを制御する</small></li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+</section>
+
+<section class="slide" id="feature">
+  <h2>特徴</h2>
+
+  <ul>
+    <li>プロアクティブ型</li>
+    <li>コントローラーのスケールアウトに対応</li>
+  </ul>
+
+  <img src="./Feature.png">
+</section>
+
+<section class="slide" id="api">
+  <h2>VNM API</h2>
+
+  <a href="http://trema.github.io/virtual-network-platform/doc/api/api.html">http://trema.github.io/virtual-network-platform/doc/api/api.html</a>
+
+  <ul>
+    <li>RESTベース</li>
+    <li>JSONフォーマット</li>
+    <li>ネットワーク、ポート、MACアドレスの３つ</li>
+    <li>新規、削除、一覧、詳細</li>
+    <li>"486 Busy Here"に注意</li>
+  </ul>
+</section>
+
 <!-- deck.navigation snippet -->
 <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
 <a href="#" class="deck-next-link" title="Next">&#8594;</a>
